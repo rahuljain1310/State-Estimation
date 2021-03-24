@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-# File   : motion.py
+# File   : model.py
 # Author : Rahul Jain
 # Email  : rahuljain13101999@gmail.com
 # Date   : 23/03/2021
@@ -69,14 +69,17 @@ class AirPlaneModel():
         self.sensor_model = SensorModel(C, Q)
         self.actual_trajectory = list()
         self.observed_trajectory = list()
+        self.actual_velocity = list()
         X0 = X0.reshape(-1, 1)
         self.X_prev = X0
         self.X0 = X0
     
     def record(self, X, Z):
         cur_pos = X.reshape((-1,))[:2]
+        cur_vel = X.reshape((-1,))[2:]
         obs_pos = Z.reshape((-1,))
         self.actual_trajectory.append(cur_pos)
+        self.actual_velocity.append(cur_vel)
         self.observed_trajectory.append(obs_pos)
 
     def step(self, U):
